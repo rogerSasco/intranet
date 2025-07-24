@@ -1,21 +1,41 @@
 <!--JS dropdown --> 
 <!DOCTYPE html>
 <html lang="en">
-<body class = "background">
+  <head>
+    <title>Sasco Intranet</title>
+</head>
+<body style="background-image: url('your-image.jpg'); background-size: cover;"><br />
 
-  <b><span style="color: lightgray; font-family: arial;">Welcome to SASCO</span>
+
+  <b><span style="color: red; font-family: arial;">Welcome to SASCO Intranet</span><p></p>
   </b> 
-<div class="dropdown"> <button class="dropbtn" onclick="toggleDropdown('myDropdown')" style="color: orange;">sasco IntraNet</button>  
+<div class="dropdown"> <button class="dropbtn" onclick="toggleDropdown('myDropdown')" style="color: orange;">Sasco Home</button>  
     <div class="dropdown-content" id="myDropdown">    
       <input id="myInput" onkeyup="filterDropdown('myInput','myDropdown')" placeholder="Search.." type="text" />   
-      <a href="microsoft-edge:https://sascosg.sharepoint.com/sites/docs/SitePages/ITHelpdeskHome.aspx" rel="noopener noreferrer" target="_blank">HR</a>
-      <a href="microsoft-edge:https://sascosg.sharepoint.com/sites/SascoIntranet#analytics-dashboard" rel="noopener noreferrer" target="_blank">IT</a>
-      <a href="microsoft-edge:https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">CA</a>
       <a href="microsoft-edge:https://sascosg.sharepoint.com/SitePages/Home.aspx" rel="noopener noreferrer" target="_blank">Sasco Home</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">AH (Allied Health)</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">CA (Community Activation)</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">CC (Care Centre)</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">CP (Corporate Planning)</a>
+      <a href="https://sascosg.sharepoint.com/sites/docs/SitePages/ITHelpdeskHome.aspx" rel="noopener noreferrer" target="_blank">FN (Finance)</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">FRM (Funds & Resource Mgmt)</a>
+      <a href="https://sg.quickhr.co/" rel="noopener noreferrer" target="_blank">HR (Human Resource)</a>
+      <a href="https://sascosg.sharepoint.com/sites/SascoIntranet#analytics-dashboard" rel="noopener noreferrer" target="_blank">IT (Technology)</a>
+      <a href="https://sascosg.sharepoint.com/sites/AACworkflow?spStartSource=spappbar" rel="noopener noreferrer" target="_blank">CEO office</a>
+      
     </div>
 </div>
 
-<button class="dropbtn" onclick="hider"><b href="https://www.mongodb.com/cloud/atlas/register" rel="noopener noreferrer" target="_blank">login Mongo Atlas</b></button>
+<div class="dropdown"> <button class="dropbtn" onclick="toggleDropdown('myDropdown')" style="color: orange;">Sasco Limited</button>  
+    <div class="dropdown-content" id="myDropdown">    
+      <input id="myInput" onkeyup="filterDropdown('myInput','myDropdown')" placeholder="Search.." type="text" />   
+      <a href="https://www.sasco.sg/haven-schoolhouse/" rel="noopener noreferrer" target="_blank">HavenSchoolHouse</a>
+      <a href="https://cccs.edu.sg/" rel="noopener noreferrer" target="_blank">CCCS Learning</a>
+     
+    </div>
+</div>
+
+<button class="dropbtn" onclick="hider"><a href="https://www.mongodb.com/cloud/atlas/register" rel="noopener noreferrer" target="_blank">login Mongo Atlas</a></button>
 <button class="dropbtn" onclick="hider"><a href="https://m3l415072023.signin.aws.amazon.com/console" rel="noopener noreferrer" target="_blank">aws console login</a></button><br />
 </body>
 </html>  
@@ -53,10 +73,15 @@
   <style>
     .dropbtn {   
       background-color: black; color: white; padding: 6px; font-size: 16px; border: none; cursor: pointer; border-radius:8px;
+    }
+    .dropbtn a {
+      text-decoration: none;
+      color: limegreen;
     }  
     .dropdown {   
       position: relative; display: inline-block; 
     }
+    
     .dropdown-content {
       display: none; position: absolute; background-color: #f6f6f6; min-width: 230px; overflow: auto; border: 1px solid #ddd; z-index: 1; 
     }
