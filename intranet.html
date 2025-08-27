@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open SharePoint in Edge</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #0078d7;
+            border-radius: 50%;
+            color: white;
+            font-size: 40px;
+        }
+        
+        h1 {
+            color: #0078d7;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            color: #545454;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: #0078d7;
+            color: white;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3);
+        }
+        
+        .button:hover {
+            background-color: #0066b4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 120, 215, 0.4);
+        }
+        
+        .button:active {
+            transform: translateY(0);
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0078d7;
+            padding: 15px;
+            text-align: left;
+            margin: 25px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .instructions h3 {
+            color: #0078d7;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .browser-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #e3f2fd;
+        }
+        
+        .browser-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .success-message {
+            color: #107c10;
+            background-color: #dff6dd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .error-message {
+            color: #d13438;
+            background-color: #fde7e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <span>↗</span>
+        </div>
+        
+        <h1>Open SharePoint in Edge</h1>
+        <p>Click the button below to open the SASCO Senior Citizens' Home SharePoint site in Microsoft Edge browser.</p>
+        
+        <div id="successMessage" class="success-message">
+            Success! The SharePoint site should now be opening in Microsoft Edge.
+        </div>
+        
+        <div id="errorMessage" class="error-message">
+            Unable to open the site automatically. Please use the instructions below.
+        </div>
+        
+        <button id="openButton" class="button">Open in Microsoft Edge</button>
+        
+        <div class="browser-info">
+            <span class="browser-icon">🌐</span>
+            <span id="browserInfo">Checking your browser...</span>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ol>
+                <li>Click the "Open in Microsoft Edge" button above</li>
+                <li>If nothing happens, copy this URL: <strong>https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home</strong></li>
+                <li>Open Microsoft Edge browser manually</li>
+                <li>Paste the URL into the address bar and press Enter</li>
+            </ol>
+        </div>
+        
+        <footer>
+            <p>Note: For the best experience with SharePoint, we recommend using Microsoft Edge.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const openButton = document.getElementById('openButton');
+            const browserInfo = document.getElementById('browserInfo');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Detect browser
+            function detectBrowser() {
+                const userAgent = navigator.userAgent;
+                if (userAgent.indexOf("Edg/") > -1 || userAgent.indexOf("Edge/") > -1) {
+                    browserInfo.textContent = "You're using Microsoft Edge!";
+                    return "edge";
+                } else if (userAgent.indexOf("Chrome/") > -1) {
+                    browserInfo.textContent = "You're using Chrome. Click the button to open in Edge.";
+                    return "chrome";
+                } else if (userAgent.indexOf("Firefox/") > -1) {
+                    browserInfo.textContent = "You're using Firefox. Click the button to open in Edge.";
+                    return "firefox";
+                } else if (userAgent.indexOf("Safari/") > -1) {
+                    browserInfo.textContent = "You're using Safari. Click the button to open in Edge.";
+                    return "safari";
+                } else {
+                    browserInfo.textContent = "Click the button to open in Microsoft Edge.";
+                    return "other";
+                }
+            }
+            
+            // Initialize browser detection
+            detectBrowser();
+            
+            // Open SharePoint in Edge
+            openButton.addEventListener('click', function() {
+                const sharePointUrl = "https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home";
+                
+                // Try to use ms-edge protocol (works on Windows)
+                try {
+                    window.location.href = "microsoft-edge:" + sharePointUrl;
+                    
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    
+                    // Fallback - open in new tab after a delay if protocol fails
+                    setTimeout(function() {
+                        window.open(sharePointUrl, '_blank');
+                    }, 300);
+                } catch (e) {
+                    // If protocol fails, just open in a new tab
+                    window.open(sharePointUrl, '_blank');
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

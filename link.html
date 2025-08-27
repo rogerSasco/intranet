@@ -1,0 +1,120 @@
+<!--JS dropdown --> 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sasco Intranet</title>
+</head>
+<body style="background-image: url('your-image.jpg'); background-size: cover;"><br />
+
+
+  <b><span style="color: red; font-family: arial;">Welcome to SASCO Intranet</span><p></p>
+  </b> 
+<a href="https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home" rel="noopener noreferrer" style='color: white; text-decoration: none;' >src</a>
+
+</body>
+</html>  
+  
+  
+  
+  
+<!-- Edge browser -->
+<script> 
+  const isEdge = navigator.userAgent.includes("Edg");
+
+  if (!isEdge) {
+    document.body.innerHTML = `
+      <h2>This page is optimized for Microsoft Edge.</h2>
+      <p>Please open it in Edge for full functionality.</p>
+      <a href="microsoft-edge:${window.location.href}">Click here to open in Edge</a>
+    `;
+  }
+</script>
+
+  
+  
+  
+  
+  <script>
+  /* When the user clicks on the button, toggle between hiding and showing the dropdown content */ 
+     function toggleDropdown(dropdownId) {   
+       document.getElementById(dropdownId).classList.toggle("show"); 
+     }  
+     function filterDropdown(inputId, dropdownId) {   
+       var input, filter, ul, li, a, i;   
+       input = document.getElementById(inputId);   
+       filter = input.value.toUpperCase();   
+       div = document.getElementById(dropdownId);   
+       a = div.getElementsByTagName("a");   
+       for (i = 0; i < a.length; i++) {     
+         txtValue = a[i].textContent || a[i].innerText;     
+         if (txtValue.toUpperCase().indexOf(filter) > -1) {       
+           a[i].style.display = "";     
+         } else {       
+           a[i].style.display = "none";     
+         }   } }
+  </script> 
+  
+  
+  <!--dropdown-->
+  <style>
+    .dropbtn {   
+      background-color: darkslategray; color: white; padding: 6px; font-size: 16px; border: none; cursor: pointer; border-radius:8px;
+    }
+    .dropbtn a {
+      text-decoration: none;
+      color: limegreen;
+    }  
+    .dropdown {   
+      position: relative; display: inline-block; 
+    }
+    
+    .dropdown-content {
+      display: none; position: absolute; background-color: #f6f6f6; min-width: 230px; overflow: auto; border: 1px solid #ddd; z-index: 1; 
+    }
+    .dropbtn:hover,
+    .dropbtn:focus {
+      background-color: #3e8e41; 
+    }  
+    
+    .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+  
+  /* Multiple #id styles*/  
+    #myInputID{   
+      box-sizing: border-box; 
+      background-position: 14px 12px; 
+      background-repeat: no-repeat; 
+      
+    }  
+    #myInput:focus {
+      outline: 3px solid #ddd;
+    }  
+      
+    .dropdown-content a {
+      color: black; padding: 12px 16px; text-decoration: none; display: block; 
+    }  
+    .dropdown a:hover {
+      background-color: #ddd;
+    }  
+    .show {
+      display: block;
+    } 
+    input{
+      color: black;
+    }
+
+.logo-button:hover{
+      opacity: 0.5;
+      }  
+
+.shadow-button:hover{
+          box-shadow: 10px 10px 3px rgb(192, 188, 188);
+        }        
+  </style>
+    
+ 
