@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SASCO intranet</title>
+    <title>Open SharePoint in Edge</title>
     <style>
         * {
             box-sizing: border-box;
@@ -102,6 +102,42 @@
         
         .instructions li {
             margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .url-container {
+            display: flex;
+            align-items: center;
+            background: #f1f3f4;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            font-family: monospace;
+        }
+        
+        .url-text {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+            text-align: left;
+        }
+        
+        .copy-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            color: #0078d7;
+            transition: all 0.2s;
+        }
+        
+        .copy-button:hover {
+            background-color: #e0e0e0;
         }
         
         .browser-info {
@@ -142,6 +178,25 @@
             margin: 15px 0;
             display: none;
         }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #323232;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .copy-notification.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -172,7 +227,17 @@
             <h3>Instructions:</h3>
             <ol>
                 <li>Click the "Open in Microsoft Edge" button above</li>
-                <li>If nothing happens, copy this URL: <a>https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home</a></li>
+                <li>If nothing happens, copy this URL:
+                    <div class="url-container">
+                        <span class="url-text">https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home</span>
+                        <button class="copy-button" title="Copy to clipboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </li>
                 <li>Open Microsoft Edge browser manually</li>
                 <li>Paste the URL into the address bar and press Enter</li>
             </ol>
@@ -183,12 +248,17 @@
         </footer>
     </div>
 
+    <div class="copy-notification" id="copyNotification">URL copied to clipboard!</div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const openButton = document.getElementById('openButton');
             const browserInfo = document.getElementById('browserInfo');
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
+            const copyButton = document.querySelector('.copy-button');
+            const copyNotification = document.getElementById('copyNotification');
+            const sharePointUrl = "https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home";
             
             // Detect browser
             function detectBrowser() {
@@ -211,13 +281,44 @@
                 }
             }
             
+            // Copy URL to clipboard
+            function copyToClipboard() {
+                navigator.clipboard.writeText(sharePointUrl).then(() => {
+                    // Show notification
+                    copyNotification.classList.add('show');
+                    setTimeout(() => {
+                        copyNotification.classList.remove('show');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = sharePointUrl;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        copyNotification.textContent = "URL copied to clipboard!";
+                        copyNotification.classList.add('show');
+                        setTimeout(() => {
+                            copyNotification.classList.remove('show');
+                        }, 2000);
+                    } catch (err) {
+                        copyNotification.textContent = "Failed to copy URL";
+                        copyNotification.classList.add('show');
+                        setTimeout(() => {
+                            copyNotification.classList.remove('show');
+                        }, 2000);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            }
+            
             // Initialize browser detection
             detectBrowser();
             
             // Open SharePoint in Edge
             openButton.addEventListener('click', function() {
-                const sharePointUrl = "https://sascosg.sharepoint.com/sites/SASCOSeniorCitizens'Home";
-                
                 // Try to use ms-edge protocol (works on Windows)
                 try {
                     window.location.href = "microsoft-edge:" + sharePointUrl;
@@ -237,6 +338,9 @@
                     errorMessage.style.display = 'none';
                 }
             });
+            
+            // Add copy functionality
+            copyButton.addEventListener('click', copyToClipboard);
         });
     </script>
 </body>
